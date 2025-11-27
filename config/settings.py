@@ -99,19 +99,19 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env.str('PG_DATABASE', 'postgres'),
-        'USER': env.str('PG_USER', 'postgres'),
-        'PASSWORD': env.str('PG_PASSWORD', 'postgres'),
-        'HOST': env.str('DB_HOST', 'localhost'),
-        'PORT': env.int('DB_PORT', 5432),
-    },
-    'extra': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-}
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': env.str('PG_DATABASE', 'postgres'),
+            'USER': env.str('PG_USER', 'postgres'),
+            'PASSWORD': env.str('PG_PASSWORD', 'postgres'),
+            'HOST': env.str('DB_HOST', 'localhost'),
+            'PORT': env.int('DB_PORT', 5432),
+        },
+        'extra': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        },
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -212,9 +212,9 @@ SIMPLE_JWT = {
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-    'JTI_CLAIM': 'jti',
-    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
-    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
-}
+        'TOKEN_TYPE_CLAIM': 'token_type',
+        'JTI_CLAIM': 'jti',
+        'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+        'SLIDING_TOKEN_LIFETIME': timedelta(minutes=1),
+        'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=7),
+    }
