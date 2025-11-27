@@ -14,7 +14,6 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 
-DATABASE_URL = 'postgres://postgres:123456@localhost:5432/To_Do'
 root = environ.Path(__file__) - 2
 env = environ.Env()
 environ.Env.read_env(env.str(root(), '.env'))
@@ -99,24 +98,19 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import os
-
-# Agar Railway (yoki boshqa platforma) DATABASE_URL bergan bo‘lsa → uni ishlat
-if os.getenv('DATABASE_URL'):
-    DATABASES = {
-        'default': env.db()   # Bu avtomatik PostgreSQL ga ulanadi
-    }
-else:
-    # Localda .env fayldan o‘qiydi
-    DATABASES = {
+DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': env.str('PG_DATABASE', 'To_Do'),
+            'NAME': env.str('PG_DATABASE', 'postgres'),
             'USER': env.str('PG_USER', 'postgres'),
-            'PASSWORD': env.str('PG_PASSWORD', '123456'),
+            'PASSWORD': env.str('PG_PASSWORD', 'postgres'),
             'HOST': env.str('DB_HOST', 'localhost'),
             'PORT': env.int('DB_PORT', 5432),
-        }
+        },
+        'extra': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        },
     }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
