@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 import environ
 
+DATABASE_URL = 'postgres://postgres:123456@localhost:5432/To_Do'
 root = environ.Path(__file__) - 2
 env = environ.Env()
 environ.Env.read_env(env.str(root(), '.env'))
@@ -98,12 +99,15 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+
+# Agar Railway (yoki boshqa platforma) DATABASE_URL bergan bo‘lsa → uni ishlat
 if os.getenv('DATABASE_URL'):
     DATABASES = {
-        'default': env.db()  # Bu avtomatik DATABASE_URL ni to‘g‘ri o‘qib oladi
+        'default': env.db()   # Bu avtomatik PostgreSQL ga ulanadi
     }
 else:
-    # Local development uchun .env dagi sozlamalar
+    # Localda .env fayldan o‘qiydi
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
