@@ -98,19 +98,21 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+if os.getenv('DATABASE_URL'):
+    DATABASES = {
+        'default': env.db()  # Bu avtomatik DATABASE_URL ni to‘g‘ri o‘qib oladi
+    }
+else:
+    # Local development uchun .env dagi sozlamalar
+    DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': env.str('PG_DATABASE', 'postgres'),
+            'NAME': env.str('PG_DATABASE', 'To_Do'),
             'USER': env.str('PG_USER', 'postgres'),
-            'PASSWORD': env.str('PG_PASSWORD', 'postgres'),
+            'PASSWORD': env.str('PG_PASSWORD', '123456'),
             'HOST': env.str('DB_HOST', 'localhost'),
             'PORT': env.int('DB_PORT', 5432),
-        },
-        'extra': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        },
+        }
     }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
